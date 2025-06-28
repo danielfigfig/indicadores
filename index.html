@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Indicadores de Saúde</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card-shadow {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Hide scrollbar but allow scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Main container for the app -->
+    <div class="w-full max-w-4xl mx-auto p-4 md:p-6">
+
+        <!-- =================================== -->
+        <!--        PÁGINA PRINCIPAL (HOME)      -->
+        <!-- =================================== -->
+        <div id="pageHome" class="fade-in">
+            <header class="text-center mb-10">
+                <h1 class="text-3xl md:text-4xl font-bold text-teal-800">Painel de Indicadores de Saúde</h1>
+                <p class="mt-2 text-lg text-gray-600">Selecione um indicador para analisar</p>
+            </header>
+
+            <main>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Card do Indicador 1: Mais Acesso -->
+                    <div id="goToCalculatorBtn" class="bg-white rounded-xl card-shadow p-6 flex flex-col items-center text-center cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                        <div class="bg-teal-100 text-teal-600 rounded-full h-16 w-16 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-chart-line text-3xl"></i>
+                        </div>
+                        <h2 class="font-bold text-xl text-gray-800">Mais Acesso à APS</h2>
+                        <p class="text-gray-500 mt-2 text-sm">Analisar a proporção entre demanda programada e espontânea.</p>
+                    </div>
+
+                    <!-- Card para Futuro Indicador (Exemplo) -->
+                    <div class="bg-gray-200 border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center text-center">
+                         <div class="text-gray-400 rounded-full h-16 w-16 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-plus text-3xl"></i>
+                        </div>
+                        <h2 class="font-bold text-lg text-gray-500">Novo Indicador</h2>
+                        <p class="text-gray-400 mt-2 text-sm">Em breve</p>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+
+        <!-- =================================== -->
+        <!-- PÁGINA DA CALCULADORA DE INDICADOR  -->
+        <!-- =================================== -->
+        <div id="pageCalculator" class="hidden fade-in">
+            <!-- Botão Voltar -->
+             <button id="backBtn" class="mb-6 bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-all flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i>
+                Voltar ao Início
+            </button>
+
+            <header class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-teal-700">Indicador: Mais Acesso à APS</h1>
+                <p class="mt-2 text-lg text-gray-600">Ferramenta de Análise e Priorização Gerencial</p>
+            </header>
+    
+            <main class="bg-white rounded-xl card-shadow p-6 md:p-8 max-w-2xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Input para Demanda Programada -->
+                    <div>
+                        <label for="demandaProgramada" class="block text-sm font-medium text-gray-700 mb-2">
+                            Total de Atendimentos por Demanda Programada
+                        </label>
+                        <input type="number" id="demandaProgramada" min="0" placeholder="Ex: 450" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
+                        <p class="text-xs text-gray-500 mt-1">Consultas agendadas, cuidado continuado, etc.</p>
+                    </div>
+                    <!-- Input para Demanda Espontânea -->
+                    <div>
+                        <label for="demandaEspontanea" class="block text-sm font-medium text-gray-700 mb-2">
+                            Total de Atendimentos por Demanda Espontânea
+                        </label>
+                        <input type="number" id="demandaEspontanea" min="0" placeholder="Ex: 550" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
+                        <p class="text-xs text-gray-500 mt-1">Consulta no dia, atendimento de urgência, etc.</p>
+                    </div>
+                </div>
+    
+                <!-- Botão de Calcular -->
+                <div class="mt-8 text-center">
+                    <button id="calcularBtn" class="bg-teal-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-500 focus:ring-opacity-50 transition-transform transform hover:scale-105">
+                        Analisar Indicador
+                    </button>
+                </div>
+            </main>
+    
+            <!-- Seção de Resultados -->
+            <div id="resultado" class="mt-8 bg-white rounded-xl card-shadow p-6 md:p-8 hidden fade-in max-w-2xl mx-auto">
+                 <h2 class="text-2xl font-bold text-center text-teal-700 mb-6">Análise de Desempenho</h2>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                     <!-- Gráfico/Percentual -->
+                     <div class="flex flex-col items-center justify-center p-4 rounded-lg bg-gray-100">
+                        <p class="text-lg font-medium text-gray-600">Acesso Programado</p>
+                         <p id="percentual" class="text-5xl font-bold text-teal-600 my-2">0%</p>
+                         <div id="classificacao" class="text-lg font-semibold text-gray-700 px-3 py-1 rounded-full"></div>
+                     </div>
+                     <!-- Recomendação -->
+                     <div class="p-4">
+                         <h3 class="text-xl font-semibold text-gray-800 mb-2">O que priorizar?</h3>
+                         <p id="recomendacao" class="text-gray-600 leading-relaxed"></p>
+                     </div>
+                 </div>
+                 <p class="text-center text-xs text-gray-500 mt-6">Análise baseada na Ficha Técnica de Qualificação: C1 - Mais Acesso à APS.</p>
+            </div>
+            
+            <!-- Mensagem de erro -->
+            <div id="erro" class="mt-6 text-center text-red-600 font-semibold hidden max-w-2xl mx-auto"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- GERENCIAMENTO DE NAVEGAÇÃO ENTRE PÁGINAS ---
+        const pageHome = document.getElementById('pageHome');
+        const pageCalculator = document.getElementById('pageCalculator');
+        const goToCalculatorBtn = document.getElementById('goToCalculatorBtn');
+        const backBtn = document.getElementById('backBtn');
+
+        goToCalculatorBtn.addEventListener('click', () => {
+            pageHome.classList.add('hidden');
+            pageCalculator.classList.remove('hidden');
+            window.scrollTo(0, 0); // Rola para o topo da página
+        });
+
+        backBtn.addEventListener('click', () => {
+            pageCalculator.classList.add('hidden');
+            pageHome.classList.remove('hidden');
+             window.scrollTo(0, 0); // Rola para o topo da página
+        });
+
+
+        // --- LÓGICA DA CALCULADORA (sem alterações) ---
+        const programadaInput = document.getElementById('demandaProgramada');
+        const espontaneaInput = document.getElementById('demandaEspontanea');
+        const calcularBtn = document.getElementById('calcularBtn');
+        const resultadoDiv = document.getElementById('resultado');
+        const erroDiv = document.getElementById('erro');
+        const percentualText = document.getElementById('percentual');
+        const classificacaoText = document.getElementById('classificacao');
+        const recomendacaoText = document.getElementById('recomendacao');
+
+        calcularBtn.addEventListener('click', () => {
+            resultadoDiv.classList.add('hidden');
+            erroDiv.classList.add('hidden');
+
+            const programada = parseInt(programadaInput.value, 10);
+            const espontanea = parseInt(espontaneaInput.value, 10);
+
+            if (isNaN(programada) || isNaN(espontanea) || programada < 0 || espontanea < 0) {
+                erroDiv.textContent = 'Por favor, insira valores numéricos válidos e positivos para ambos os campos.';
+                erroDiv.classList.remove('hidden');
+                return;
+            }
+
+            const totalAtendimentos = programada + espontanea;
+
+            if (totalAtendimentos === 0) {
+                erroDiv.textContent = 'O total de atendimentos não pode ser zero.';
+                erroDiv.classList.remove('hidden');
+                return;
+            }
+            
+            const percentual = (programada / totalAtendimentos) * 100;
+
+            let classificacao = '';
+            let recomendacao = '';
+            let classificacaoBgColor = '';
+            let classificacaoTextColor = '';
+
+            if (percentual < 40) {
+                classificacao = 'Baixo Acesso Programado';
+                classificacaoBgColor = 'bg-yellow-100';
+                classificacaoTextColor = 'text-yellow-800';
+                recomendacao = 'A equipe pode estar com o foco excessivo na demanda espontânea. É crucial PRIORIZAR a organização da agenda para ampliar o acesso programado e o cuidado continuado dos pacientes.';
+            } else if (percentual >= 40 && percentual <= 60) {
+                classificacao = 'Acesso Equilibrado';
+                classificacaoBgColor = 'bg-green-100';
+                classificacaoTextColor = 'text-green-800';
+                recomendacao = 'O acesso parece bem distribuído entre as demandas. A prioridade é MANTER este equilíbrio, monitorando constantemente a satisfação dos usuários e as necessidades de saúde da população.';
+            } else {
+                classificacao = 'Baixo Acesso Espontâneo';
+                classificacaoBgColor = 'bg-orange-100';
+                classificacaoTextColor = 'text-orange-800';
+                recomendacao = 'A equipe pode não estar suficientemente aberta para atender as necessidades agudas. Deve-se PRIORIZAR a reorganização dos fluxos para garantir o atendimento da demanda espontânea no mesmo dia.';
+            }
+
+            percentualText.textContent = `${percentual.toFixed(1)}%`;
+            classificacaoText.textContent = classificacao;
+            recomendacaoText.textContent = recomendacao;
+
+            classificacaoText.className = 'text-lg font-semibold px-3 py-1 rounded-full';
+            classificacaoText.classList.add(classificacaoBgColor, classificacaoTextColor);
+
+            resultadoDiv.classList.remove('hidden');
+        });
+
+    </script>
+</body>
+</html>
